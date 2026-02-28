@@ -1,3 +1,26 @@
 spring:
   application:
     name: multimodel
+
+  ai:
+    chat:
+      client:
+        enabled: false
+
+    openai:
+      api-key: ${OPENAI_API_KEY}
+      chat:
+        options:
+          model: gpt-5-nano
+          temperature: 1
+
+    google:
+      genai:
+        api-key: ${GENAI_API_KEY}
+        chat:
+          options:
+            model: gemini-2.5-flash
+
+logging:
+  pattern:
+    console: "%green(%d{HH:mm:ss.SSS}) %blue(%-5level) %red([%thread]) %yellow(%logger{15}) - %msg%n"

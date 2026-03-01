@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ChatClientConfig {
 
+    // giả sử muốn set default system message thỉ dùng ChatClient.builder...
     @Bean
     public ChatClient openAiChatClient(OpenAiChatModel openAiChatModel) {
         return ChatClient.create(openAiChatModel);

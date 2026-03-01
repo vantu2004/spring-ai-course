@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/prompt-template")
-public class PromtTemplateController {
+public class PromptTemplateController {
     private final ChatClient chatClient;
 
-    public PromtTemplateController(ChatClient chatClient) {
+    public PromptTemplateController(ChatClient chatClient) {
         this.chatClient = chatClient;
     }
 
@@ -21,7 +21,7 @@ public class PromtTemplateController {
     Resource userPromptTemplate;
 
     @GetMapping("/chat")
-    public String emailResponse(@RequestParam String customerName, @RequestParam String customerMessage) {
+    public String chat(@RequestParam String customerName, @RequestParam String customerMessage) {
         return chatClient.prompt().system("""
                         You are a professional customer service assistant which helps drafting email
                          responses to improve the productivity of the customer support team""")

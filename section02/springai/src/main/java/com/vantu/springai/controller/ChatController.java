@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/spring-ai")
+@RequestMapping("/api/v1/normal")
 public class ChatController {
 
     private final ChatClient chatClient;

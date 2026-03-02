@@ -1,16 +1,19 @@
 package com.vantu.springai.config;
 
+import com.vantu.springai.advisors.TokenUsageAuditAdvisor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.List;
+
 @Configuration
 public class ChatClientConfig {
     @Bean
     public ChatClient chatClient(OpenAiChatModel openAiChatModel) {
-        ChatClient.Builder builder = ChatClient.builder(openAiChatModel).defaultAdvisors(new SimpleLoggerAdvisor());
+        ChatClient.Builder builder = ChatClient.builder(openAiChatModel).defaultAdvisors(List.of(new SimpleLoggerAdvisor(), new TokenUsageAuditAdvisor()));
 
         return builder.defaultSystem("""
                         You are an internal IT helpdesk assistant. Your role is to assist

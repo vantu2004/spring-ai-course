@@ -1,5 +1,6 @@
 package com.vantu.springai.controller;
 
+import com.vantu.springai.advisors.TokenUsageAuditAdvisor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,8 @@ public class ChatController {
     @GetMapping("/chat")
     public String chat(@RequestParam("message") String message) {
         return this.chatClient.prompt()
+                // ko khuyến khích dùng advisor ghi token trong api mà nên cấu hình bean dùng chung
+                // .advisors(new TokenUsageAuditAdvisor())
                 .user(message)
                 .call()
                 .content();

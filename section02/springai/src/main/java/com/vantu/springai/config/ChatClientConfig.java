@@ -1,6 +1,7 @@
 package com.vantu.springai.config;
 
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +10,8 @@ import org.springframework.context.annotation.Configuration;
 public class ChatClientConfig {
     @Bean
     public ChatClient chatClient(OpenAiChatModel openAiChatModel) {
-        ChatClient.Builder builder = ChatClient.builder(openAiChatModel);
+        ChatClient.Builder builder = ChatClient.builder(openAiChatModel).defaultAdvisors(new SimpleLoggerAdvisor());
+
         return builder.defaultSystem("""
                         You are an internal IT helpdesk assistant. Your role is to assist
                         employees with IT-related issues such as resetting passwords,

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+// promptStuffing là cách đưa 1 đoạn context ngắn cho LLM hc và trả lời
 @RestController
 @RequestMapping("/api/v1/prompt-stuffing")
 public class PromptStuffingController {

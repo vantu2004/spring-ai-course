@@ -1,6 +1,8 @@
 package com.vantu.springai.controller;
 
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.openai.OpenAiChatOptions;
+import org.springframework.ai.openai.api.OpenAiApi;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +25,14 @@ public class PromptStuffingController {
 
     @GetMapping("/chat")
     public String chat(@RequestParam String message) {
-        return chatClient.prompt().system(systemPromptTemplate).user(message).call().content();
+        return chatClient.prompt()
+                // ngoài cách dùng bean đã config thì có thể tự config lại option cho api
+                .options(OpenAiChatOptions.builder()
+                        .model(OpenAiApi.ChatModel.GPT_5_NANO)
+                        .temperature(1.0)
+                        .build()).system(systemPromptTemplate)
+                .user(message)
+                .call()
+                .content();
     }
 }

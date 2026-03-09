@@ -8,7 +8,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
+// comment lại đ đảm bảo khi chạy app lên thì không tự đăng ký bean và chạy code dưới
+//@Component
 public class RandomDataLoader {
     private final VectorStore vectorStore;
 

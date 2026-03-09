@@ -1,5 +1,6 @@
 package com.vantu.springai.config;
 
+import com.vantu.springai.advisors.TokenUsageAuditAdvisor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
@@ -31,10 +32,11 @@ public class ChatMemoryChatClientConfig {
 
         Advisor loggerAdvisor = new SimpleLoggerAdvisor();
         Advisor memoryAdvisor = MessageChatMemoryAdvisor.builder(chatMemory).build();
+        Advisor tokenUsageAdvisor = new TokenUsageAuditAdvisor();
 
         return chatClientBuilder
                 .defaultOptions(openAiChatOptions)
-                .defaultAdvisors(List.of(loggerAdvisor, memoryAdvisor))
+                .defaultAdvisors(List.of(loggerAdvisor, memoryAdvisor, tokenUsageAdvisor))
                 .build();
     }
 }

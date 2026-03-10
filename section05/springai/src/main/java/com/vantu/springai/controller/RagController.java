@@ -19,11 +19,13 @@ import static org.springframework.ai.chat.memory.ChatMemory.CONVERSATION_ID;
 @RestController
 @RequestMapping("/api/v1/rag")
 public class RagController {
-    private final ChatClient chatClient;
+    private final ChatClient chatMemoryChatClient;
+    private final ChatClient webSearchRagChatClient;
     private final VectorStore vectorStore;
 
-    public RagController(@Qualifier("chatMemoryChatClient") ChatClient chatClient, VectorStore vectorStore) {
-        this.chatClient = chatClient;
+    public RagController(@Qualifier("chatMemoryChatClient") ChatClient chatMemoryChatClient, @Qualifier("webSearchRagChatClient") ChatClient webSearchRagChatClient, VectorStore vectorStore) {
+        this.chatMemoryChatClient = chatMemoryChatClient;
+        this.webSearchRagChatClient = webSearchRagChatClient;
         this.vectorStore = vectorStore;
     }
 
@@ -40,7 +42,7 @@ public class RagController {
 //        List<Document> documents = vectorStore.similaritySearch(searchRequest);
 //        String similarContext = documents.stream().map(Document::getText).collect(Collectors.joining(System.lineSeparator()));
 
-        String response = chatClient.prompt()
+        String response = chatMemoryChatClient.prompt()
 //                .system(promptSystemSpec -> promptSystemSpec.text(systemPromptRandomDataTemplate).param("documents", similarContext))
                 .advisors(
                         advisorSpec -> advisorSpec.param(CONVERSATION_ID, username)
@@ -59,8 +61,21 @@ public class RagController {
 //        List<Document> documents = vectorStore.similaritySearch(searchRequest);
 //        String similarContext = documents.stream().map(Document::getText).collect(Collectors.joining(System.lineSeparator()));
 
-        String response = chatClient.prompt()
+        String response = chatMemoryChatClient.prompt()
 //                .system(promptSystemSpec -> promptSystemSpec.text(systemPromptDocumentTemplate).param("documents", similarContext))
+                .advisors(
+                        advisorSpec -> advisorSpec.param(CONVERSATION_ID, username)
+                )
+                .user(message)
+                .call()
+                .content();
+
+        return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(response);
+    }
+
+    @GetMapping("/web-search/chat")
+    public ResponseEntity<String> webSearchChat(@RequestHeader("username") String username, @RequestParam("message") String message) {
+        String response = webSearchRagChatClient.prompt()
                 .advisors(
                         advisorSpec -> advisorSpec.param(CONVERSATION_ID, username)
                 )

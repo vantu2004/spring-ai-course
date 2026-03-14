@@ -19,7 +19,8 @@ public class HelpDeskTools {
     private static final Logger logger = LoggerFactory.getLogger(HelpDeskTools.class);
     private final HelpDeskTicketService helpDeskTicketService;
 
-    @Tool(name = "createTicket", description = "Create the support ticket")
+    // mặc định return direct là false, nghĩa là tool gọi hàm xong thì gửi response về LLM tiếp, bây giờ chỉ cần chặn lại để giảm 1 lần gọi LLM
+    @Tool(name = "createTicket", description = "Create the support ticket", returnDirect = true)
     String createTicket(@ToolParam(description = "Details to create a support ticket") TicketRequest ticketRequest, ToolContext toolContext) {
         String username = (String) toolContext.getContext().get("username");
 

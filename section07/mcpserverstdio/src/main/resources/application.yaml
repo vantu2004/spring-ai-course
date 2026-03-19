@@ -12,6 +12,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  ai:
+    mcp:
+      server:
+        stdio: true
 
   main:
     # tắt web application

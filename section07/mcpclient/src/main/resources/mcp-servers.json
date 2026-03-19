@@ -1,5 +1,12 @@
 {
   "mcpServers": {
+    "spring-ai-mcp": {
+      "command": "C:\\Program Files\\Java\\jdk-21\\bin\\java",
+      "args": [
+        "-jar",
+        "D:\\WorkSpace\\Java\\Spring_AI_Course\\practice\\section07\\mcpserverstdio\\target\\mcpserverstdio-0.0.1-SNAPSHOT.jar"
+      ]
+    },
     "filesystem": {
       "command": "D:\\Program\\NodeJs\\npx.cmd",
       "args": [

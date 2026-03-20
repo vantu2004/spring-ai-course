@@ -6,8 +6,12 @@ spring:
       api-key: ${OPENAI_API_KEY}
     mcp:
       client:
-        stdio:
-          servers-configuration: "classpath:mcp-servers.json"
+#        stdio:
+#          servers-configuration: "classpath:mcp-servers-stdio.json"
+        sse:
+          connections:
+            vantu:
+              url: "http://localhost:8090"
 
 logging:
   pattern:
